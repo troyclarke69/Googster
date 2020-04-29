@@ -1,0 +1,50 @@
+﻿
+@model IEnumerable<Googster.ViewModels.LarvaeListingModel>
+
+@{
+    ViewData["Title"] = "COVID 19 Stats";
+}
+
+<h2></h2>
+<span class="badge">COVID 19 STATS</span>
+<h2></h2>
+<p>
+    <a asp-action="DownStats">Get Latest daily stats</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>@Html.DisplayNameFor(model => model.DownloadDate)</th>*@
+            <th>
+                <a asp-controller="Larvae" asp-action="Index" asp-route-id="1">Country</a>
+            </th>
+            <th>
+                Province
+            </th>
+            <th>
+                Cases
+            </th>
+            <th>
+                Deaths
+            </th>
+            <th>
+                Recovered
+            </th>           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+           
+            <td>@Html.DisplayFor(modelItem => item.Country)</td>
+            <td>@Html.DisplayFor(modelItem => item.Province)</td>
+            <td>@Html.DisplayFor(modelItem => item.Cases)</td>
+            <td>@Html.DisplayFor(modelItem => item.Deaths)</td>
+            <td>@Html.DisplayFor(modelItem => item.Recovered)</td>
+
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Googster.ViewModels.FeedListingModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2></h2>
+<span class="badge"><h2>Feed</h2></span>
+<h2></h2>
+<p>
+    <a asp-action="DownNews">Get News</a>
+</p>
+<p>
+    <a asp-action="ViewStats">View Stats</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.UrlToImage)</th>
+            <th>@Html.DisplayNameFor(model => model.PublishedAt)</th>
+
+            <th>@Html.DisplayNameFor(model => model.SourceName)</th>
+            <th>@Html.DisplayNameFor(model => model.Author)</th>
+        </tr>
+        <tr>
+            <th class="">@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.Url)</th>
+            <th>@Html.DisplayNameFor(model => model.Rating)</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td><img src=@item.UrlToImage class="img-url" style="width:180px;height:120px;" /></td>
+            <td>@Html.DisplayFor(modelItem => item.PublishedAt)</td>
+
+            <td>@Html.DisplayFor(modelItem => item.SourceName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Author)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td><a href=@item.Url>Read story</a></td>
+            <td><h2>@Html.DisplayFor(modelItem => item.Rating)</h2></td>
+        </tr>
+}
+    </tbody>
+</table>

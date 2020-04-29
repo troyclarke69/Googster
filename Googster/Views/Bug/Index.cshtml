@@ -1,0 +1,118 @@
+﻿@model Googster.ViewModels.BugIndexModel
+
+@{
+    ViewData["Title"] = "COVID 19 Stats";
+}
+
+<h2></h2>
+<span class="badge">COVID 19 STATS</span>
+<h2></h2>
+<p>
+    <a asp-action="DownStats">Get Latest Stats</a>
+</p>
+
+<table class="table">
+    <tr>
+        <td><b>Last Download:  </b></td>
+        <td>@Model.DownloadDate</td>
+        <td></td>
+        <td></td>
+        <td><b>Total Countries/Other:  </b></td>
+        <td>@Model.TotalCountries</td>
+
+    </tr>
+    <tr>
+        <td><b>Total Cases:  </b></td>
+        <td>@Model.TotalCasesStr</td>
+    @*</tr>
+    <tr>*@
+        <td><b>Total Deaths:  </b></td>
+        <td>@Model.TotalDeathsStr</td>
+    @*</tr>
+    <tr>*@
+        <td><b>Death Rate (%):  </b></td>
+        <td>@Model.DeathPercentage</td>
+    </tr>
+    <tr>
+        <td><b>Today's Cases:  </b></td>
+        <td>@Model.TotalTodayCasesStr</td>
+    @*</tr>
+    <tr>*@
+        <td><b>Today's Deaths:  </b></td>
+        <td>@Model.TotalTodayDeathsStr</td>
+        <td></td><td></td>
+    </tr>
+    <tr>
+        <td><b>Total Recovered:  </b></td>
+        <td>@Model.TotalRecoveredStr</td>
+    @*</tr>
+    <tr>*@
+        <td><b>Total Active:  </b></td>
+        <td>@Model.TotalActiveStr</td>
+    @*</tr>
+    <tr>*@
+        <td><b>Total Critical:  </b></td>
+        <td>@Model.TotalCriticalStr</td>
+    </tr>
+</table>
+
+<hr />
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>@Html.DisplayNameFor(model => model.DownloadDate)</th>*@
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="1">Country</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="2">Cases</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="3">Today's Cases</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="4">Deaths</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="5">Today's Deaths</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="6">Cases/M</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="7">Deaths/M</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="8">Population</a>
+            </th>
+            <th>
+                <a asp-controller="Bug" asp-action="Index" asp-route-id="9">Death Rate</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BugListing)
+        {
+            <tr>
+                @*<td>
+                    <img src=@item.Flag class="img-url" style="width:180px;height:120px;" />
+                    @Html.DisplayFor(modelItem => item.Country)
+                    </td>*@
+                @*<td>@Html.DisplayFor(modelItem => item.DownloadDate.Date)</td>*@
+
+                <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                <td>@Html.DisplayFor(modelItem => item.CaseStr)</td>
+                <td>@Html.DisplayFor(modelItem => item.TodayCases)</td>
+                <td>@Html.DisplayFor(modelItem => item.Deaths)</td>
+                <td>@Html.DisplayFor(modelItem => item.TodayDeaths)</td>
+                <td>@Html.DisplayFor(modelItem => item.CasesPerOneMillion)</td>
+                <td>@Html.DisplayFor(modelItem => item.DeathsPerOneMillion)</td>
+                <td>@Html.DisplayFor(modelItem => item.PopStr)</td>
+                <td>@Html.DisplayFor(modelItem => item.DeathPercentage)</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
