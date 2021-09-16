@@ -19,10 +19,10 @@ const XChart = ({   title, labels,
     // console.log('recoveredData', recoveredData);
 
     return (
-        <div>
+        <div className="container">
             <p></p>
             <h4>{title}</h4>
-            <small className='small-text'>Click on the chart labels to show/hide the corresponding data.</small>
+            <p className='small-text'>Click on the chart labels to show/hide the corresponding data.</p>
             <Line
                 data={{
                         labels: labels,
@@ -31,7 +31,7 @@ const XChart = ({   title, labels,
                             label: caseTitle,
                             data: caseData, 
                             backgroundColor: [
-                                'rgba(205, 181, 132, 0.4)',
+                                'rgba(125, 181, 132, .5)',
                             ],                           
                         },
                         {
@@ -41,13 +41,13 @@ const XChart = ({   title, labels,
                                 'rgba(54, 162, 235, 1)',
                             ],                           
                         },  
-                        {
-                            label: recoveredTitle,
-                            data: recoveredData, 
-                            backgroundColor: [
-                                'rgba(255, 226, 86, 0.6)',
-                            ],                           
-                        },                         
+                        // {
+                        //     label: recoveredTitle,
+                        //     data: recoveredData, 
+                        //     backgroundColor: [
+                        //         'rgba(255, 226, 86, 0.6)',
+                        //     ],                           
+                        // },                         
                     ],
                 }}
                 height={200}

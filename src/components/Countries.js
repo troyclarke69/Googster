@@ -1,13 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-// import  { Link } from 'react-router-dom';
 import { AllContext } from '../context/api'; 
 import NumberFormat from 'react-number-format';
 import Table from 'react-bootstrap/Table';
 import { motion } from 'framer-motion';
 import ScrollUpButton from "react-scroll-up-button";
-
-// this tool seems like garbage
-// import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'; 
 
 const Countries = () => {
     const countriesData = useContext(AllContext);
@@ -27,6 +23,7 @@ const Countries = () => {
             {/* <table className="table table-hover"> */}
 
             <Table responsive="sm" striped>
+                {/* <thead style={{backgroundColor:'black', color:'white'}}> */}
                 <thead>
                     <tr>
                         {/* <th></th> */}

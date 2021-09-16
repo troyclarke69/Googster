@@ -161,7 +161,7 @@ const WhosBad = () => {
         // console.log('WeekArrPerc', weekArrPerc);
 
         let endTime = new Date(); let es = endTime.getSeconds(); let em = endTime.getMilliseconds();
-        console.log(es, s, em, m);
+        // console.log(es, s, em, m);
 
     };
     
@@ -253,7 +253,7 @@ const WhosBad = () => {
                     </tbody>
                 </table>
                 
-            <h6>Highest Cases: 3-day Ave.</h6>
+            <h6>Highest Cases: 3-day av.</h6>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -263,7 +263,7 @@ const WhosBad = () => {
                     </thead>
                     <tbody>
                         
-                            {threeDayAve.map( (c, index) => {
+                            {threeDayav.map( (c, index) => {
                                     return (
                                        <tr> 
                                            <td>
@@ -280,7 +280,7 @@ const WhosBad = () => {
                     </tbody>
                 </table>
         
-            <h6>Highest Cases: Past Week Ave.</h6>
+            <h6>Highest Cases: Past Week av.</h6>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -290,7 +290,7 @@ const WhosBad = () => {
                     </thead>
                     <tbody>
                         
-                            {weekAve.map( (c, index) => {
+                            {weekav.map( (c, index) => {
                                     return (
                                        <tr> 
                                            <td>

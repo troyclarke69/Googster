@@ -13,7 +13,7 @@ const CountryNews = ({ alpha2Code }) => {
 
     // const { title, source, publishedAt, author, description, url, urlToImage} = countryNews['articles'];
     let news = [];
-    console.log('newsResults', countryNews.totalResults)
+    // console.log('newsResults', countryNews.totalResults)
     if (countryNews.totalResults > 0) {
         news = countryNews.articles;
         // console.log(news);

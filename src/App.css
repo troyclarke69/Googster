@@ -1,7 +1,61 @@
-body {
-  /* background: linear-gradient(rgb(243, 190, 190), white); */
-  /* background-color: rgba(255,254,253, 1); */
-  /* background-color: red;; */
+
+/* THE ONLY CHANGES BETWEEN 
+  googster.tk and cov192021.netlify.app are in here >> "*"
+*/
+
+* {
+  /* background: radial-gradient(#ffb2a1, #a1b2cc); */
+
+  /* background: radial-gradient(#f7ded9, #626f81); */
+  /* background: linear-gradient(#f7ded9, #a6b9d3); */
+  /* color: #f8f8f8; */
+  color:navy;
+  /* color: rgba(120,130,140,1); */
+
+  /* font-weight: 800; */
+  font-weight: 400;
+  /* text-shadow: 1px 2px 4px white; */
+}
+
+.card-vaccinations {
+  background-color: #8179b1;
+  /* border-radius: 10%; */
+}
+
+.card-vaccinations-yesterday {
+  background-color: rgba(10,10,120,.1);
+  margin: 1em 0;
+  padding: 5px;
+}
+
+.card-vaccinations-body {
+  letter-spacing: 5px;
+  /* box-shadow: 1px 2px 4px black; */
+  color: white;
+  font-weight: 800;
+  padding: .5rem 0rem;
+}
+
+/* .card-vaccinations-text-p > em {
+  color: white;
+} */
+
+/* .my-container
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem;
+} */
+
+/* .container {
+  background-color: black;
+  color: white;
+} */
+
+.dark {
+  background-color: black;
+  color: white;
 }
 
 Table th {
@@ -22,17 +76,20 @@ Table th {
 .fa-arrow-up {
   background-color: red;
   color: white;
-  font-size: 1.15rem;
-  padding: 5px;
+  font-size: 1rem;
+  padding: 10px;
   margin: .5rem .25rem;
+  border-radius: 100px;
 }
 
 .fa-arrow-down {
   background-color: green;
   color: white;
-  font-size: 1.15rem;
-  padding: 5px;
+  font-size: 1rem;
+  padding: 10px;
   margin: .5rem .25rem;
+  border-radius: 100px;
+
 }
 
 .case-trend-container {
@@ -40,18 +97,24 @@ Table th {
   justify-content: center;
   align-items: center;
 
+  /* text-align: center; */
   border: 1px solid #e5e5e5;
-  box-shadow: 1px 2px 4px #c4c4c4;
-  width: 65vw;
-  margin: .5rem 0;
+  /* box-shadow: 1px 2px 4px #c4c4c4; */
+  /* width: 65vw; */
+  /* margin: .5rem 0; */
+  margin-bottom: 1rem;
+  /* margin: 10rem 5rem; */
   padding: .25rem;
-  background-color: #f8f8f8
+  background-color: #f8f8f8;
+
+  /* width: 100vw; */
+
 }
 
 .case-trend-container>h4 {
-  letter-spacing: 10px;
+  letter-spacing: 5px;
   text-shadow: 1px 4px 4px #000aaa;
-  color: #f8f8f8;
+  /* color: #f8f8f8; */
   margin-right: 5px;
 }
 /* 
@@ -78,6 +141,13 @@ h5 {
   text-align: center;  
 }
 
+h6 {
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-align: center;  
+}
+
 ul {
   list-style-type: none;
   font-size: .75rem;
@@ -96,21 +166,29 @@ li {
   font-size: .5rem;
 }
 
+/* .trend-list-data > td {
+  font-size: .75rem;
+  color: yellow;
+} */
+
 .stats-container { 
   margin: .1rem;
+  /* background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 .stats-container > h5 {
   letter-spacing: 10px;
 }
 
-.stats-list > h5 {
+.stats-list > h5, .stats-list > h6 {
   background-color: #f8f8f8;
   color: #a1a1a1;
   padding-bottom: .2rem;
-  font-size: 1rem;
+  /* font-size: 1rem; */
   text-decoration: dashed;
-  letter-spacing: 5px;
+  /* letter-spacing: 5px; */
 }
 
 .stats-list > li {
@@ -140,19 +218,12 @@ li {
  /* background-color: rgba(0,0,0,.8); */
  /* padding: .5rem; */
  /* height: 10vh; */
- margin: 2rem;
+ /* margin: 2rem; */
 }
 
 .card-body {
   box-shadow: 1px 2px 4px black;
-  /* background-color: #203040; */
-  /* background-color: #f8f8f8; */
-
   color: red;
-
-  /* font-weight: 800; */
-
-
 }
 
 .card-text {
@@ -187,14 +258,21 @@ tbody>tr>:nth-child(1) {
   color: navy;
 }
 
-tbody>tr>:nth-child(4) {
+/* tbody>tr>:nth-child(4) {
   color: orange;
   font-size: .75rem;
-}
+} */
 
-tbody>tr>:nth-child(2), tbody>tr>:nth-child(4), tbody>tr>:nth-child(6),
+/* tbody>tr>:nth-child(2), tbody>tr>:nth-child(4), tbody>tr>:nth-child(6),
 thead>tr>:nth-child(2), thead>tr>:nth-child(4), thead>tr>:nth-child(6){
-  background-color: rgba(245, 235, 235, .5);
+  background-color: rgba(245, 235, 235, .15);
+  font-weight: 800;
+  color: black;
+ } */
+
+tbody>tr>:nth-child(4), tbody>tr>:nth-child(6),
+thead>tr>:nth-child(4), thead>tr>:nth-child(6){
+  background-color: rgba(245, 235, 235, .15);
   /* font-weight: 800; */
   color: black;
  }
@@ -209,11 +287,14 @@ thead>tr>:nth-child(2), thead>tr>:nth-child(4), thead>tr>:nth-child(6){
 }
 
 .img-flag {
-  padding-bottom: .5rem;
+  /* padding-bottom: .5rem; */
+  border: 1px solid #f8f8f8;
+  box-shadow: 4px 6px 8px #c4c4c4;
+  margin-bottom: .5rem;
 }
 
 .small-text {
-  font-size: .5rem;
+  font-size: .75rem;
 }
 
 .card:hover {
@@ -254,6 +335,11 @@ thead>tr>:nth-child(2), thead>tr>:nth-child(4), thead>tr>:nth-child(6){
 
 .App-link {
   color: #61dafb;
+}
+
+.link-to {
+  font-size: 1.25rem;
+  font-weight: 800;
 }
 
 @keyframes App-logo-spin {

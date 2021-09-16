@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 
 const Cruncher = ({ countryDailies }) => {
-    // const countryData = useContext(CountryContext);
-    // const { getCountryDailies } = useContext(CountryContext);
-
-    console.log('cruncher', countryDailies);
+    // console.log('cruncher', countryDailies);
 
     useEffect(() => {
         okComputer({countryDailies});
-        // tester({countryDailies});
     },[]);
 
     const tester = ({countryDailies}) => {

@@ -1,5 +1,9 @@
 // covid stats resources
 
+export const owidApi = "https://covid.ourworldindata.org/data/owid-covid-data.json";
+
+export const vacApi = "https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/vaccinations.json";
+
 export const dailyApi = "https://pomber.github.io/covid19/timeseries.json";
 
 export const earthApi = "https://corona.lmao.ninja/v2/all";

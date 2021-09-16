@@ -4,62 +4,84 @@ import { Bar, Line, defaults } from 'react-chartjs-2'
 defaults.global.tooltips.enabled = true;
 defaults.global.legend.position = 'top';
 
-const CaseChart = ({ title, labels, data }) => {
+const CaseChart = ({ title, labels, caseData, lastXCases, lastXCasesSmoothed, lastXAves, lastXVacs }) => {
 
     return (
         <div>
             <p></p>
-            <h4>{title}</h4>
-            {/* <small className='small-text'>Click on the chart labels to show/hide the corresponding data.</small> */}
-
-            <Bar
+            <Line
                 data={{
-                        // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                         labels: labels,
                         datasets:[
                         {
-                            label: '',
-                            data: data,
+                            label: title,
+                            data: lastXCases,
+                            hidden: true,
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
+                                'rgba(40, 80, 140, .5)',
+                            ],  
+                            fill: false,
                             borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 2,
+                                'rgba(0, 150, 50, 1)',
+                            ],                          
                         },
+                        {
+                            label: '7-Day Avg',
+                            data: lastXAves, 
+                            backgroundColor: [
+                                'rgba(255, 0, 0, .5)',
+                            ],
+                            fill: false,
+                            borderColor: [
+                                'rgba(255, 0, 0, 1)',
+                            ],                               
+                        },
+                        {
+                            label: "Daily Cases/Million",
+                            data: lastXCasesSmoothed,
+                            hidden: true,
+                            backgroundColor: [
+                                'rgba(200, 200, 0, .7)',
+                            ],  
+                            fill: false,
+                            borderColor: [
+                                'rgba(200, 200, 0, 1)',
+                            ],                          
+                        },
+                        {
+                            label: 'Daily Vaccinations/Million',
+                            data: lastXVacs, 
+                            backgroundColor: [
+                                'rgba(0, 0, 255, 1)',
+                            ],
+                            fill: false,
+                            borderColor: [
+                                'rgba(0, 0, 255, 1)',
+                            ],                               
+                        }                         
                     ],
                 }}
-                height={400}
-                width={600}
+                height={200}
+                width={300}
                 options={{
                     maintainAspectRatio: false,
                     scales: {
                         yAxes: [
                             {
                                 ticks: {
-                                    beginAtZero: true,
+                                    beginAtZero: false,
                                 }
                             }
                         ]
                     }, 
                     legend: {
                         labels: {
-                            fontSize: 16,
+                            fontSize: 12,                          
                         }
                     }
                 }}
             />
+
         </div>
     )
 }

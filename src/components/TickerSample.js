@@ -20,30 +20,74 @@ const MoveStuffAround = () => {
                     
                     <br />
                     Do you wear a seatbelt? Do you put on a coat when it's cold?<br /> */}
+                    <div className="container-fluid">
+                    <span>  
+                        
+                        <p style={{ fontFamily: 'sans-serif', color: 'navy', letterSpacing: '.25rem', fontSize: '1.2rem', fontWeight: '800'}}>
 
-                    <span style={{ }}>                       
-                        <h4 style={{ color: 'navy', letterSpacing: '.5rem', fontSize: '1.2rem'}}>
+                            {/* Planet Earth Stats: */}
+
                             <NumberFormat displayType={'text'} 
+                                thousandSeparator="," 
+                                value={earth.todayCases} 
+                            /> 
+                            <span>
+                                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                                &nbsp;New Cases in the World Today
+                                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                                &nbsp;&nbsp;
+                            </span>
+
+                            <br />
+
+                            <NumberFormat displayType={'text'} 
+                                thousandSeparator=","
+                                value={earth.todayDeaths} 
+                            /> 
+                            <span>
+                                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                                &nbsp;Deaths in the World Today
+                                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                            </span>
+
+                            {/* <br /> */}
+
+                            {/* <NumberFormat displayType={'text'} 
+                                displayType={'text'} thousandSeparator="," 
+                                decimalScale="2"
+                                value={(earth.todayDeaths / earth.todayCases) * 100}
+                            /> */}
+
+                            {/* <span style={{ fontFamily: 'sans-serif', color: 'red', letterSpacing: '-.05rem', fontSize: '1rem', fontWeight: '800'}}>
+                                &nbsp;% chance you might die if you get covid
+                            </span>   */}
+
+                            {/* <NumberFormat displayType={'text'} 
                                 thousandSeparator="," 
                                 value={earth.cases} 
-                            /> 
-                            <span>
-                                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
-                                &nbsp;cases
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </span>
+                            />  */}
+                            {/* <span>
+                                &nbsp;&nbsp;
+                                &nbsp;Total Cases
+                                &nbsp;&nbsp;
+                            </span> */}
 
-                            <NumberFormat displayType={'text'} 
+                            {/* <NumberFormat displayType={'text'} 
                                 thousandSeparator="," 
                                 value={earth.deaths} 
-                            /> 
-                            <span>
-                                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
-                                &nbsp;deaths
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </span>
+                            />  */}
+                            {/* <span>
+                                &nbsp;Total Deaths
+                                &nbsp;&nbsp;
+                            </span> */}
+                            
+                            <br />
+                            
+                            {/* <span style={{ fontFamily: 'sans-serif', color: 'green', letterSpacing: '.1rem', fontSize: '1rem', fontWeight: '600'}}
+                                >If you are an anti-vaxxer and/or anti-masker, then you're a Dumbass.
+                            </span> */}
 
-                        </h4>           
+                        </p>           
                         
                                   
                     </span>
@@ -59,7 +103,7 @@ const MoveStuffAround = () => {
                     </span> */}
 
             
-                    
+                    </div>  
                 </>
             )}
         </Ticker>

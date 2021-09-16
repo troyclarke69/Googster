@@ -6,7 +6,6 @@ const Error = () => {
         <>
             <div className='container-fluid'>
                 <h1>An error has occured</h1>
-                {/* <h4>Link to /home</h4> */}
             </div>
         </>
     )

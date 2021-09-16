@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CountryContext, StatsContext } from '../context/api'; 
+import { CountryContext } from '../context/api'; 
 import NumberFormat from 'react-number-format';
 import XChart from '././XChart';
 import Moment from 'react-moment';
 import CaseChart from './CaseChart';
 
 const CountryDailies = ({ countryName }) => {
+    let num = 5;
     const countryData = useContext(CountryContext);
     const { getCountryDailies, countryDailiesLoading, countryDailiesError } = useContext(CountryContext);
-    const { stats } = useContext(StatsContext);
+    const { getVaccinations, vaccinations, vaccinationsLoading, vaccinationsError} = useContext(CountryContext);
 
     useEffect( () => {
         getCountryDailies(countryName);
+    },[countryName]);
+
+    useEffect( () => {
+        getVaccinations(countryName);
     },[countryName]);
 
     const countryDailies = countryData.countryDailies;
@@ -29,6 +34,12 @@ const CountryDailies = ({ countryName }) => {
     const [chartCases, setChartCases] = useState([]);
     const [chartDeaths, setChartDeaths] = useState([]);
     const [chartRecovered, setChartRecovered] = useState([]);
+
+    const [lastXCases, setLastXCases] = useState([]);
+    const [lastXCasesSmoothed, setLastXCasesSmoothed] = useState([]);
+    const [lastXDates, setLastXDates] = useState([]);
+    const [lastXAves, setLastXAves] = useState([]);
+    const [lastXVacs, setLastXVacs] = useState([]);
 
     const [yesterdayCases, setYesterdayCases] = useState(0);
     const [threeDayCases, setThreeDayCases] = useState(0);
@@ -54,6 +65,8 @@ const CountryDailies = ({ countryName }) => {
     const [highDeaths, setHighDeaths] = useState(0);
     const [highDeathsDate, setHighDeathsDate] = useState(null);
 
+    // console.log('vaccinations', vaccinations);
+
     useEffect( () => {
         okComputer({countryDailies});
     },[countryDailies]);
@@ -61,16 +74,18 @@ const CountryDailies = ({ countryName }) => {
     const tester = ({ countryDailies }) => {
         if (!countryDailiesLoading && !countryDailiesError) {
             const data = countryDailies;
-            console.log('data', data[320][0], data[320][1]);
+            // console.log('data', data[320][0], data[320][1]);
         }
     };
 
     const okComputer = ({ countryDailies }) => {
-        if (!countryDailiesLoading && !countryDailiesError) {
+        if (!countryDailiesLoading && !countryDailiesError 
+            && !vaccinationsLoading && !vaccinationsError) {
 
             let listData = [];
             let start = 0;
             let end = countryDailies.length;
+
             // timeline chart (all reported dates - f. Jan 22/20)
             for (var i = start; i < end; i++) {  
                 labels.push(countryDailies[i][0]);    
@@ -83,6 +98,54 @@ const CountryDailies = ({ countryName }) => {
             setChartCases(caseData);
             setChartRecovered(recoveredData);
             setChartDeaths(deathData);
+
+            // timeline chart 2 (last x reported dates) WITH WK av.
+            start = countryDailies.length - 1;
+            //  end = countryDailies.length - 61;
+
+            let offset = countryDailies.length - vaccinations[0].data.length;
+            // console.log('offset', offset);
+
+            // report from specific date >>
+            let dateStart = new Date('1 Jan 2021');
+            let currentDate = new Date();
+            let totalSeconds = (currentDate - dateStart) / 1000;
+            let totalDays = Math.ceil(totalSeconds / 3600 / 24);
+            end = countryDailies.length - totalDays;
+
+            let _lastXCases = [];
+            let _lastXCasesSmoothed = [];
+            let _lastXDates = [];
+            let _lastXAves = [];
+            let _lastXVacs = [];
+            setLastXVacs([]);
+            setLastXCasesSmoothed([]);
+
+            for (var i = start; i > end; i--) {  
+                _lastXDates.push(countryDailies[i][0]);    
+                _lastXCases.push(countryDailies[i][1] - countryDailies[i - 1][1]);  
+                _lastXAves.push(
+                    Math.ceil((countryDailies[i][1] - countryDailies[i - 7][1])
+                        / 7)
+                ); 
+
+                _lastXVacs.push(vaccinations[0].data[i - offset]['new_vaccinations_smoothed_per_million']);
+                // 7-day avg
+                _lastXCasesSmoothed.push(Math.ceil(vaccinations[0].data[i - offset]['new_cases_smoothed_per_million']));
+            }
+
+            // console.log('cases', _lastXCasesSmoothed);
+
+            _lastXCases = _lastXCases.reverse();
+            _lastXCasesSmoothed = _lastXCasesSmoothed.reverse();
+            _lastXDates = _lastXDates.reverse();
+            _lastXAves = _lastXAves.reverse();
+            _lastXVacs = _lastXVacs.reverse();
+            setLastXCases(_lastXCases);
+            setLastXCasesSmoothed(_lastXCasesSmoothed);
+            setLastXDates(_lastXDates);
+            setLastXAves(_lastXAves);
+            setLastXVacs(_lastXVacs);
 
             // CASE averages : last 3 days, 1 week, 2 weeks, months, twoMonths, threeMonths
             start = countryDailies.length - 1;
@@ -177,7 +240,6 @@ const CountryDailies = ({ countryName }) => {
             setThreeMonthDeaths(bzz);    
             setAllReportedDeaths(czz);    
             
-            
             //WORST DAYS - Cases & Deaths
             var dailyHigh = 0;
             var dailyHighDate;
@@ -215,32 +277,45 @@ const CountryDailies = ({ countryName }) => {
     return (
         <>
             <div className="container">
+                <h5>Daily Cases</h5>
+                <p className='small-text'>Click on the chart labels to show/hide the corresponding data.</p>
 
                 <CaseChart 
-                    title={'Ave. Cases/Day'}
-                    labels={['Past Month', 'Past Week', 'Past 3 days', 'Yesterday']}
-                    data={
-                        [ monthCases,
+                    title={'Daily Cases'}
+
+                    // labels={['Past 2 Months (ave/day)', 
+                    //         'Past Month (ave/day)', 'Past Week (ave/day)', 
+                    //     'Past 3 days (ave/day)', 'Yesterday']}
+                    labels = {lastXDates}
+                    caseData={
+                        [   twoMonthCases,
+                            monthCases,
                             weekCases,
                             threeDayCases,
                             yesterdayCases
-                        ]
-                    
+                        ]                 
                     }
-                    // data={
-                    //         [ monthCases, monthDeaths ],
-                    //         [ weekCases, weekDeaths ],
-                    //         [ threeDayCases, threeDayDeaths ],
-                    //         [ yesterdayCases, yesterdayDeaths ]
-                        
-                    //     }
+                    
+                    lastXCases={lastXCases}
+                    lastXCasesSmoothed={lastXCasesSmoothed}
+                    lastXAves={lastXAves}
+                    lastXVacs={lastXVacs}
+                    // deathData={
+                    //     [ monthDeaths,
+                    //         weekDeaths,
+                    //         threeDayDeaths,
+                    //         yesterdayDeaths
+                    //     ]                 
+                    // }
                 />
             </div>
 
-            <div className='container'>
-                <p></p>  
-                          
+            {/* <hr></hr> */}
+            <h1></h1>
+            {/* <div className='container'>  */}
+            <div className="container">                    
                 <h5>Cases &amp; Deaths</h5>
+                {/* <h5>The Numbers</h5> */}
                     <table className="table table-striped table-hover table-custom">
                         <thead>
                             <tr>
@@ -255,38 +330,38 @@ const CountryDailies = ({ countryName }) => {
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={yesterdayCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={yesterdayDeaths} /></td>
                             </tr>
-                            <tr>
-                                <td><h6>past 3 days (ave./day)</h6></td>
+                            {/* <tr>
+                                <td><h6>past 3 days (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={threeDayCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={threeDayDeaths} /></td>
-                            </tr>
+                            </tr> */}
                             <tr>
-                                <td><h6>past week (ave./day)</h6></td>
+                                <td><h6>past week (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={weekCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={weekDeaths} /></td>
                             </tr>
-                            <tr>
-                                <td><h6>past 2 weeks (ave./day)</h6></td>
+                            {/* <tr>
+                                <td><h6>past 2 weeks (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={twoWeekCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={twoWeekDeaths} /></td>
-                            </tr>
+                            </tr> */}
                             <tr>
-                                <td><h6>past 30 days (ave./day)</h6></td>
+                                <td><h6>past 30 days (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={monthCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={monthDeaths} /></td>
                             </tr>
-                            <tr>
-                                <td><h6>past 60 days (ave./day)</h6></td>
+                            {/* <tr>
+                                <td><h6>past 60 days (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={twoMonthCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={twoMonthDeaths} /></td>
-                            </tr>
-                            <tr>
-                                <td><h6>past 90 days (ave./day)</h6></td>
+                            </tr> */}
+                            {/* <tr>
+                                <td><h6>past 90 days (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={threeMonthCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={threeMonthDeaths} /></td>
-                            </tr>
+                            </tr> */}
                             <tr>
-                                <td><h6>all reported (ave./day)</h6></td>
+                                <td><h6>all reported (avg/day)</h6></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={allReportedCases} /></td>
                                 <td><NumberFormat displayType={'text'} thousandSeparator="," value={allReportedDeaths} /></td>
                             </tr>
@@ -298,14 +373,7 @@ const CountryDailies = ({ countryName }) => {
 
             <div className='container'>
                 <h5>Worst Days</h5>
-                <table className='table'>
-                    {/* <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead> */}
+                <table className='table table-custom'>
                     <tbody>
                         <tr>
                             <td>Cases</td>
@@ -329,7 +397,6 @@ const CountryDailies = ({ countryName }) => {
                 </table>
             </div>
 
-            {/* labels, caseTitle, caseData, deathTitle, deathData, recoveredTitle, recoveredData */}
             <XChart title={title}
                     labels={chartLabels} 
                     caseTitle={caseTitle}
@@ -339,7 +406,7 @@ const CountryDailies = ({ countryName }) => {
                     recoveredTitle={recoveredTitle}
                     recoveredData={chartRecovered}
             />  
-            <p></p>         
+        
         </>
     )
 };

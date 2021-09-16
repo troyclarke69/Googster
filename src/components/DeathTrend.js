@@ -1,16 +1,20 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 
-const CaseTrend = ({ rank, pastVsPreviousWeekCasesAve, pastVsPreviousWeekCasesAvePerc }) => {
+
+const DeathTrend = ({ rank, pastVsPreviousWeekDeathsAve, pastVsPreviousWeekDeathsAvePerc }) => {
+
+    // console.log('DeathTrend', pastVsPreviousWeekDeathsAve, pastVsPreviousWeekDeathsAvePerc );
+
     return (
         <div className="container-fluid">
             <div className="case-trend-container">
-                <h4>Daily Case Trend</h4>
+                <h4>Daily Death Trend</h4>
                 <div className="case-trend">
                     <small>(This Week vs. Last Week)</small>
                 </div>
                 {               
-                    pastVsPreviousWeekCasesAve > 0 
+                    pastVsPreviousWeekDeathsAve > 0 
                     ?
                     <p><i className="fa fa-arrow-up fa-2x"></i></p> 
                     :
@@ -19,7 +23,7 @@ const CaseTrend = ({ rank, pastVsPreviousWeekCasesAve, pastVsPreviousWeekCasesAv
 
                 <h6> {' '}
                     <em><NumberFormat 
-                        value={pastVsPreviousWeekCasesAvePerc} 
+                        value={pastVsPreviousWeekDeathsAvePerc} 
                         displayType={'text'} thousandSeparator="," 
                         decimalScale="1"
                     />%</em>
@@ -29,4 +33,4 @@ const CaseTrend = ({ rank, pastVsPreviousWeekCasesAve, pastVsPreviousWeekCasesAv
     )
 }
 
-export default CaseTrend;
+export default DeathTrend;
