@@ -24,12 +24,12 @@ const Splash = () => {
           getOwid, owid, owidLoading, owidError } = useContext(EarthContext);
   const { getUserGeolocationDetails, country, userDetails, userLoading, userError } = useContext(UserContext);
 
-  let spinnerType = "BallTriangle";
+  // let spinnerType = "BallTriangle";
   // let spinnerType = "Audio";
   // let spinnerType = "Bars";
   // let spinnerType = "Circles";
   // let spinnerType = "Grid";
-  // let spinnerType = "Oval";
+  let spinnerType = "Oval";
   // let spinnerType = "Puff";
   // let spinnerType = "Rings";
   // let spinnerType = "TailSpin";
